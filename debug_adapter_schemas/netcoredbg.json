@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "netcoredbg launch/attach configuration",
+  "description": "PROTOTYPE schema for the C#/.NET netcoredbg debug adapter in Zed.",
+  "type": "object",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request", "program"],
+      "properties": {
+        "label": { "type": "string" },
+        "adapter": { "type": "string" },
+        "build": { "type": "object" },
+        "request": { "const": "launch" },
+        "program": {
+          "type": "string",
+          "pattern": "\\.(dll|exe)$",
+          "description": "Path to the built assembly (*.dll or *.exe). Must match the build's TFM/configuration."
+        },
+        "args": { "type": "array", "items": { "type": "string" } },
+        "cwd": {
+          "type": "string",
+          "description": "Working directory of the debuggee. For ASP.NET Core set it to the project folder (content root)."
+        },
+        "env": { "type": "object", "additionalProperties": { "type": "string" } },
+        "stopAtEntry": { "type": "boolean" }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request", "processId"],
+      "properties": {
+        "label": { "type": "string" },
+        "adapter": { "type": "string" },
+        "request": { "const": "attach" },
+        "processId": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Target process id. Changes on every run: find it (pgrep / dotnet-trace ps) and edit before attaching."
+        }
+      }
+    }
+  ]
+}

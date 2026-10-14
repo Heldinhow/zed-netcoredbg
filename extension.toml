@@ -1,0 +1,10 @@
+id = "netcoredbg-debugger"
+name = "C# / .NET (netcoredbg)"
+version = "0.1.0"
+schema_version = 1
+authors = ["Helder Santos"]
+description = "Debug C#/.NET (CoreCLR) using Samsung netcoredbg."
+repository = "https://github.com/Heldinhow/zed-netcoredbg"
+
+[debug_adapters.netcoredbg]
+schema_path = "debug_adapter_schemas/netcoredbg.json"
