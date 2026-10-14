@@ -8,19 +8,24 @@ Debug C#/.NET (CoreCLR) in [Zed](https://zed.dev) using Samsung's
 
 ## Install
 
-Not in the extension registry yet. Install as a dev extension:
+From the Zed extension list (search `netcoredbg`): one click, no extra setup.
+> Pending review: PR [zed-industries/extensions#7987](https://github.com/zed-industries/extensions/pull/7987).
 
-1. Clone this repo.
-2. In Zed: `zed: install dev extension` → select this directory.
+### Dev install (contributors only)
 
-Zed needs `rustc` on its PATH to build the extension. If Zed was launched from
-the Dock it may not see `~/.cargo/bin`; launch Zed from a terminal (`zed .`) or
-make sure `cargo`/`rustc` are on your global PATH.
+Building a dev extension compiles Rust to WebAssembly, so Zed must find `rustc`:
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+"$HOME/.cargo/bin/rustup" target add wasm32-wasip2
+```
+
+If Zed was launched from the Dock it may not see `~/.cargo/bin`: start it from a terminal (`zed .`) or link the tools somewhere already on your PATH (`ln -sf "$HOME/.cargo/bin/"{cargo,rustc,rustup} ~/.local/bin/`).
 
 ## Requirements
 
-- .NET SDK/runtime on the PATH (Zed must see it too, same caveat as above).
-- No external tools: the adapter binary is downloaded from netcoredbg's GitHub
+- .NET SDK/runtime on the PATH (Zed must see it too, same PATH caveat as above).
+- No other tools: the adapter binary is downloaded from netcoredbg's GitHub
   releases on first use and cached per version.
 
 ## Configure
